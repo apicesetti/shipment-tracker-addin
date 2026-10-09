@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Shipment Tracker</title>
     <link rel="stylesheet" href="styles/main.css">
+    <script src="scripts/shared.js"></script>
     <script src="scripts/main.js"></script>
 </head>
 <body>
@@ -12,34 +13,33 @@
     <header class="st-header">
         <div>
             <h1>Shipment Tracker</h1>
-            <p class="st-sub">Asignación de ShipmentNumber por camión e historial de trazabilidad</p>
+            <p class="st-sub">Shipments y contenedores por camión, con historial de trazabilidad</p>
         </div>
         <nav class="st-tabs" role="tablist">
-            <button class="st-tab is-active" data-tab="assign" role="tab">Asignación</button>
+            <button class="st-tab is-active" data-tab="assign" role="tab">Vehículos</button>
             <button class="st-tab" data-tab="history" role="tab">Historial</button>
         </nav>
     </header>
 
     <div id="st-msg" class="st-msg" hidden></div>
 
-    <!-- ============ ASIGNACIÓN ============ -->
+    <!-- ============ VEHÍCULOS ============ -->
     <section id="st-tab-assign" class="st-panel">
         <div class="st-toolbar">
-            <input id="st-filter" type="search" placeholder="Buscar patente, nombre o shipment…" autocomplete="off">
+            <input id="st-filter" type="search" placeholder="Buscar patente, shipment o contenedor…" autocomplete="off">
             <select id="st-state-filter">
                 <option value="all">Todos</option>
-                <option value="with">Con shipment</option>
-                <option value="without">Sin shipment</option>
-                <option value="mismatch">Con diferencias</option>
+                <option value="with">Con carga</option>
+                <option value="without">Sin carga</option>
             </select>
             <button id="st-refresh" class="st-btn st-btn-ghost" title="Recargar">↻ Recargar</button>
         </div>
 
         <div id="st-bulk" class="st-bulk" hidden>
             <span id="st-bulk-count">0 seleccionados</span>
-            <input id="st-bulk-value" type="text" placeholder="ShipmentNumber para todos" autocomplete="off">
-            <button id="st-bulk-assign" class="st-btn">Asignar</button>
-            <button id="st-bulk-clear" class="st-btn st-btn-danger">Finalizar shipment</button>
+            <input id="st-bulk-value" type="text" placeholder="Shipment para todos" autocomplete="off">
+            <button id="st-bulk-assign" class="st-btn">Agregar shipment</button>
+            <button id="st-bulk-clear" class="st-btn st-btn-danger">Finalizar toda la carga</button>
         </div>
 
         <div class="st-table-wrap">
@@ -49,8 +49,7 @@
                     <th class="st-col-check"><input id="st-check-all" type="checkbox" aria-label="Seleccionar todos"></th>
                     <th>Vehículo</th>
                     <th>Patente</th>
-                    <th>Shipment actual</th>
-                    <th>Desde</th>
+                    <th>Carga actual</th>
                     <th class="st-col-actions">Acciones</th>
                 </tr>
                 </thead>
@@ -64,7 +63,7 @@
     <!-- ============ HISTORIAL ============ -->
     <section id="st-tab-history" class="st-panel" hidden>
         <div class="st-toolbar">
-            <input id="st-h-shipment" type="search" placeholder="ShipmentNumber" autocomplete="off">
+            <input id="st-h-text" type="search" placeholder="Shipment o contenedor" autocomplete="off">
             <input id="st-h-device" type="search" placeholder="Patente / vehículo" autocomplete="off">
             <label class="st-lbl">Desde <input id="st-h-from" type="date"></label>
             <label class="st-lbl">Hasta <input id="st-h-to" type="date"></label>
@@ -76,6 +75,7 @@
                 <thead>
                 <tr>
                     <th>Shipment</th>
+                    <th>Contenedores</th>
                     <th>Vehículo</th>
                     <th>Inicio</th>
                     <th>Fin</th>
@@ -91,6 +91,29 @@
         <p id="st-history-empty" class="st-empty" hidden>Sin registros para el filtro elegido.</p>
         <p class="st-foot" id="st-history-count"></p>
     </section>
+
+    <!-- ============ DETALLE DE VEHÍCULO ============ -->
+    <div id="st-modal" class="st-modal" hidden>
+        <div class="st-modal-box" role="dialog" aria-modal="true" aria-labelledby="st-modal-title">
+            <header class="st-modal-head">
+                <h2 id="st-modal-title"></h2>
+                <button class="st-modal-close" data-close aria-label="Cerrar">×</button>
+            </header>
+            <div id="st-modal-loads"></div>
+            <form id="st-add-form" class="st-add" autocomplete="off">
+                <h3>Agregar carga</h3>
+                <label>Shipment
+                    <input id="st-add-shipment" type="text" placeholder="Ej. SHP-0001" required>
+                </label>
+                <label>Contenedores <span class="st-muted">(uno por línea, o separados por coma)</span>
+                    <textarea id="st-add-containers" rows="3" placeholder="MSCU1234565&#10;TGHU7654321"></textarea>
+                </label>
+                <div class="st-add-actions">
+                    <button type="submit" class="st-btn">Agregar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 </body>
 </html>
