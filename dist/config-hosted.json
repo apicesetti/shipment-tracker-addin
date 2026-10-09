@@ -1,0 +1,16 @@
+{
+  "name": "Shipment Tracker",
+  "supportEmail": "soporte@cesetti.com.ar",
+  "version": "1.0.0",
+  "items": [
+    {
+      "url": "https://apicesetti.github.io/shipment-tracker-addin/shipmentTracker.html",
+      "path": "ActivityLink/",
+      "menuName": {
+        "es": "Shipment Tracker",
+        "en": "Shipment Tracker"
+      },
+      "svgIcon": "https://apicesetti.github.io/shipment-tracker-addin/images/icon.svg"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+#shipmentTracker {
+    --st-bg: #ffffff;
+    --st-fg: #1f2933;
+    --st-muted: #6b7785;
+    --st-line: #e3e7ec;
+    --st-head: #f5f7f9;
+    --st-accent: #25477b;
+    --st-accent-hover: #1b365e;
+    --st-danger: #b42318;
+    --st-warn-bg: #fff6e5;
+    --st-warn-fg: #8a5300;
+    --st-ok-bg: #e8f5ec;
+    --st-ok-fg: #1e6b38;
+    --st-err-bg: #fdecea;
+    font-family: "Roboto", "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    color: var(--st-fg);
+    background: var(--st-bg);
+    padding: 20px 24px;
+    box-sizing: border-box;
+}
+#shipmentTracker *, #shipmentTracker *::before, #shipmentTracker *::after { box-sizing: inherit; }
+#shipmentTracker [hidden] { display: none !important; }
+#shipmentTracker.is-busy { cursor: progress; }
+#shipmentTracker.is-busy .st-table-wrap { opacity: .55; }
+
+.st-header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; border-bottom: 1px solid var(--st-line); }
+.st-header h1 { font-size: 22px; font-weight: 500; margin: 0 0 4px; }
+.st-sub { margin: 0 0 12px; color: var(--st-muted); }
+.st-tabs { display: flex; gap: 4px; }
+.st-tab { background: none; border: 0; border-bottom: 3px solid transparent; padding: 8px 14px; font: inherit; color: var(--st-muted); cursor: pointer; }
+.st-tab.is-active { color: var(--st-accent); border-bottom-color: var(--st-accent); font-weight: 500; }
+
+.st-toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
+.st-toolbar input[type="search"], .st-toolbar input[type="date"], .st-toolbar select,
+.st-bulk input, .st-inline {
+    font: inherit; padding: 6px 10px; border: 1px solid var(--st-line); border-radius: 4px; background: #fff; color: inherit;
+}
+#st-filter, #st-h-shipment, #st-h-device { min-width: 220px; }
+.st-lbl { display: inline-flex; align-items: center; gap: 6px; color: var(--st-muted); }
+
+.st-btn { font: inherit; padding: 6px 14px; border-radius: 4px; border: 1px solid var(--st-accent); background: var(--st-accent); color: #fff; cursor: pointer; white-space: nowrap; }
+.st-btn:hover:not(:disabled) { background: var(--st-accent-hover); }
+.st-btn:disabled { opacity: .5; cursor: not-allowed; }
+.st-btn-ghost { background: #fff; color: var(--st-accent); }
+.st-btn-ghost:hover:not(:disabled) { background: var(--st-head); }
+.st-btn-danger { background: #fff; color: var(--st-danger); border-color: var(--st-danger); }
+.st-btn-danger:hover:not(:disabled) { background: var(--st-err-bg); }
+.st-btn-sm { padding: 3px 10px; font-size: 13px; }
+
+.st-bulk { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 12px; margin-bottom: 12px; background: var(--st-head); border: 1px solid var(--st-line); border-radius: 4px; }
+#st-bulk-count { font-weight: 500; margin-right: 4px; }
+#st-bulk-value { min-width: 220px; }
+
+.st-table-wrap { overflow-x: auto; border: 1px solid var(--st-line); border-radius: 4px; }
+.st-table { width: 100%; border-collapse: collapse; }
+.st-table th { text-align: left; font-weight: 500; background: var(--st-head); color: var(--st-muted); padding: 8px 10px; border-bottom: 1px solid var(--st-line); white-space: nowrap; }
+.st-table td { padding: 6px 10px; border-bottom: 1px solid var(--st-line); vertical-align: middle; }
+.st-table tbody tr:last-child td { border-bottom: 0; }
+.st-table tbody tr:hover { background: #fafbfc; }
+.st-table tr.is-mismatch { background: var(--st-warn-bg); }
+.st-col-check { width: 36px; }
+.st-col-actions { text-align: right; white-space: nowrap; }
+.st-col-actions .st-btn { margin-left: 4px; }
+.st-inline { width: 180px; }
+
+.st-muted { color: var(--st-muted); }
+.st-warn { display: inline-block; margin-left: 6px; color: var(--st-warn-fg); font-size: 12px; }
+.st-badge { display: inline-block; padding: 1px 8px; border-radius: 10px; background: var(--st-ok-bg); color: var(--st-ok-fg); font-size: 12px; }
+.st-empty { padding: 24px; text-align: center; color: var(--st-muted); }
+.st-foot { margin: 8px 0 0; color: var(--st-muted); font-size: 13px; }
+
+.st-msg { padding: 10px 14px; border-radius: 4px; margin-bottom: 12px; }
+.st-msg-ok { background: var(--st-ok-bg); color: var(--st-ok-fg); }
+.st-msg-error { background: var(--st-err-bg); color: var(--st-danger); }
+.st-msg-info { background: var(--st-head); color: var(--st-fg); }

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shipment Tracker</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="scripts/main.js"></script>
+</head>
+<body>
+<div id="shipmentTracker" class="st">
+    <header class="st-header">
+        <div>
+            <h1>Shipment Tracker</h1>
+            <p class="st-sub">Asignación de ShipmentNumber por camión e historial de trazabilidad</p>
+        </div>
+        <nav class="st-tabs" role="tablist">
+            <button class="st-tab is-active" data-tab="assign" role="tab">Asignación</button>
+            <button class="st-tab" data-tab="history" role="tab">Historial</button>
+        </nav>
+    </header>
+
+    <div id="st-msg" class="st-msg" hidden></div>
+
+    <!-- ============ ASIGNACIÓN ============ -->
+    <section id="st-tab-assign" class="st-panel">
+        <div class="st-toolbar">
+            <input id="st-filter" type="search" placeholder="Buscar patente, nombre o shipment…" autocomplete="off">
+            <select id="st-state-filter">
+                <option value="all">Todos</option>
+                <option value="with">Con shipment</option>
+                <option value="without">Sin shipment</option>
+                <option value="mismatch">Con diferencias</option>
+            </select>
+            <button id="st-refresh" class="st-btn st-btn-ghost" title="Recargar">↻ Recargar</button>
+        </div>
+
+        <div id="st-bulk" class="st-bulk" hidden>
+            <span id="st-bulk-count">0 seleccionados</span>
+            <input id="st-bulk-value" type="text" placeholder="ShipmentNumber para todos" autocomplete="off">
+            <button id="st-bulk-assign" class="st-btn">Asignar</button>
+            <button id="st-bulk-clear" class="st-btn st-btn-danger">Finalizar shipment</button>
+        </div>
+
+        <div class="st-table-wrap">
+            <table class="st-table">
+                <thead>
+                <tr>
+                    <th class="st-col-check"><input id="st-check-all" type="checkbox" aria-label="Seleccionar todos"></th>
+                    <th>Vehículo</th>
+                    <th>Patente</th>
+                    <th>Shipment actual</th>
+                    <th>Desde</th>
+                    <th class="st-col-actions">Acciones</th>
+                </tr>
+                </thead>
+                <tbody id="st-devices"></tbody>
+            </table>
+        </div>
+        <p id="st-devices-empty" class="st-empty" hidden>No hay vehículos para mostrar.</p>
+        <p class="st-foot" id="st-devices-count"></p>
+    </section>
+
+    <!-- ============ HISTORIAL ============ -->
+    <section id="st-tab-history" class="st-panel" hidden>
+        <div class="st-toolbar">
+            <input id="st-h-shipment" type="search" placeholder="ShipmentNumber" autocomplete="off">
+            <input id="st-h-device" type="search" placeholder="Patente / vehículo" autocomplete="off">
+            <label class="st-lbl">Desde <input id="st-h-from" type="date"></label>
+            <label class="st-lbl">Hasta <input id="st-h-to" type="date"></label>
+            <button id="st-h-search" class="st-btn">Buscar</button>
+            <button id="st-h-export" class="st-btn st-btn-ghost">Exportar CSV</button>
+        </div>
+        <div class="st-table-wrap">
+            <table class="st-table">
+                <thead>
+                <tr>
+                    <th>Shipment</th>
+                    <th>Vehículo</th>
+                    <th>Inicio</th>
+                    <th>Fin</th>
+                    <th>Duración</th>
+                    <th>Asignado por</th>
+                    <th>Finalizado por</th>
+                    <th class="st-col-actions"></th>
+                </tr>
+                </thead>
+                <tbody id="st-history"></tbody>
+            </table>
+        </div>
+        <p id="st-history-empty" class="st-empty" hidden>Sin registros para el filtro elegido.</p>
+        <p class="st-foot" id="st-history-count"></p>
+    </section>
+</div>
+</body>
+</html>
