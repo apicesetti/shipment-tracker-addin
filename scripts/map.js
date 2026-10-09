@@ -19,7 +19,7 @@ geotab.addin.shipmentTrackerMap = function (elt, service) {
     var esc = S.esc;
     var REFRESH_MS = 60000;
     var TOOLTIP_SEQUENCE = 10;
-    var MAX_TOOLTIP_CONTAINERS = 8;
+    var MAX_TOOLTIP_LINES = 4;
 
     var loads = {};          // deviceId -> [registros abiertos]
     var allowed = null;      // Set de deviceIds del filtro de grupos (null = todos)
@@ -108,11 +108,10 @@ geotab.addin.shipmentTrackerMap = function (elt, service) {
             var recs = loads[id];
             return '<li class="stm-item" data-id="' + esc(id) + '" tabindex="0" title="Centrar en el mapa">' +
                 '<div class="stm-dev">' + esc(deviceLabel(recs[0])) + '</div>' +
-                recs.map(function (r) {
-                    var c = S.containersOf(r);
-                    return '<div class="stm-ship"><span class="stm-chip">' + esc(r.details.shipmentNumber) + '</span>' +
-                        '<span class="stm-since">' + esc(S.fmtDuration(r.details.from, null)) + '</span>' +
-                        (c.length ? '<div class="stm-cont">' + esc(c.join(' · ')) + '</div>' : '') +
+                S.groupByShipment(recs).map(function (g) {
+                    return '<div class="stm-ship"><span class="stm-chip">' + esc(g.shipmentNumber) + '</span>' +
+                        '<span class="stm-since">' + esc(S.fmtDuration(g.from, null)) + '</span>' +
+                        (g.containers.length ? '<div class="stm-cont">' + esc(g.containers.join(' · ')) + '</div>' : '') +
                         '</div>';
                 }).join('') +
                 '</li>';
@@ -147,17 +146,17 @@ geotab.addin.shipmentTrackerMap = function (elt, service) {
     function tooltipFor(deviceId) {
         var recs = loads[deviceId];
         if (!recs || !recs.length) { return null; }
-        var secondary = recs.map(function (r) {
-            var n = S.containersOf(r).length;
-            return 'Shipment ' + r.details.shipmentNumber + (n ? ' · ' + n + ' contenedor' + (n === 1 ? '' : 'es') : '');
+        var groups = S.groupByShipment(recs);
+        var secondary = groups.map(function (g) {
+            return 'Shipment ' + g.shipmentNumber + (g.containers.length ? ': ' + g.containers.join(', ') : '');
         });
-        var containers = [];
-        recs.forEach(function (r) { containers = containers.concat(S.containersOf(r)); });
-        var additional = containers.slice(0, MAX_TOOLTIP_CONTAINERS);
-        if (containers.length > MAX_TOOLTIP_CONTAINERS) {
-            additional.push('+' + (containers.length - MAX_TOOLTIP_CONTAINERS) + ' más');
-        }
-        return { main: 'Carga', secondary: secondary, additional: additional };
+        var n = 0;
+        groups.forEach(function (g) { n += g.containers.length; });
+        return {
+            main: 'Carga · ' + n + ' contenedor' + (n === 1 ? '' : 'es'),
+            secondary: secondary.slice(0, MAX_TOOLTIP_LINES),
+            additional: []
+        };
     }
 
     service.events.attach('over', function (data) {

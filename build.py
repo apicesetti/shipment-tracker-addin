@@ -20,7 +20,7 @@ BASE_URL = (sys.argv[1] if len(sys.argv) > 1
 config = {
     "name": "Shipment Tracker",
     "supportEmail": "soporte@cesetti.com.ar",
-    "version": "2.0.0",
+    "version": "3.0.0",
     "items": [
         {
             "url": BASE_URL + "/shipmentTracker.html",

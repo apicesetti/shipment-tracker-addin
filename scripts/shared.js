@@ -1,5 +1,6 @@
 /**
- * Shipment Tracker — utilidades compartidas entre la página y el add-in de mapa.
+ * Shipment Tracker — utilidades compartidas entre la página y el add-in de mapa (v3).
+ * Tipos en AddInData: shipment, shipmentAssignment (contenedor→camión), settings.
  *
  * Modelo (AddInData, addInId fijo):
  *   details = {
@@ -16,7 +17,10 @@
     'use strict';
 
     var ADDIN_ID = 'ad4_hnI9SRnKRGHRvRl88fw';
-    var RECORD_TYPE = 'shipmentAssignment';
+    var RECORD_TYPE = 'shipmentAssignment';   // contenedor → camión (un período)
+    var SHIPMENT_TYPE = 'shipment';           // alta del shipment con sus contenedores
+    var SETTINGS_TYPE = 'settings';           // configuración (límite por shipment, grupo bitren)
+    var DEFAULT_SETTINGS = { maxContainersPerShipment: 5, bitrenGroupName: 'bitren', containersPerTruck: 1, containersPerBitren: 2 };
 
     // ISO 6346: valores de letras (se saltean múltiplos de 11)
     var LETTER_VALUES = (function () {
@@ -91,6 +95,18 @@
         return map;
     }
 
+    /** Agrupa registros abiertos de un vehículo por shipment → [{ shipmentNumber, containers, from }] */
+    function groupByShipment(recs) {
+        var order = [], map = {};
+        (recs || []).forEach(function (r) {
+            var k = r.details.shipmentNumber;
+            if (!map[k]) { map[k] = { shipmentNumber: k, containers: [], from: r.details.from }; order.push(k); }
+            containersOf(r).forEach(function (c) { if (map[k].containers.indexOf(c) < 0) { map[k].containers.push(c); } });
+            if (r.details.from < map[k].from) { map[k].from = r.details.from; }
+        });
+        return order.map(function (k) { return map[k]; });
+    }
+
     function esc(s) {
         return String(s === undefined || s === null ? '' : s)
             .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -124,6 +140,10 @@
     root.ShipmentTrackerShared = {
         ADDIN_ID: ADDIN_ID,
         RECORD_TYPE: RECORD_TYPE,
+        SHIPMENT_TYPE: SHIPMENT_TYPE,
+        SETTINGS_TYPE: SETTINGS_TYPE,
+        DEFAULT_SETTINGS: DEFAULT_SETTINGS,
+        groupByShipment: groupByShipment,
         iso6346Valid: iso6346Valid,
         normalizeShipment: normalizeShipment,
         validateShipment: validateShipment,
