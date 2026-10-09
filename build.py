@@ -19,7 +19,7 @@ BASE_URL = (sys.argv[1] if len(sys.argv) > 1
 META = {
     "name": "Shipment Tracker",
     "supportEmail": "soporte@cesetti.com.ar",
-    "version": "1.0.0",
+    "version": "1.0.1",
 }
 MENU = {"es": "Shipment Tracker", "en": "Shipment Tracker"}
 PATH = "ActivityLink/"

@@ -615,10 +615,17 @@ geotab.addin.shipmentTracker = function () {
             state = freshState;
             root = document.getElementById('shipmentTracker');
             if (!bound) { bindEvents(); bound = true; }
-            api.getSession(function (s) {
-                session.userName = s && s.userName ? s.userName : '';
-                callback();
-            }, function () { callback(); });
+            // getSession(callback[, newSession:boolean]) — el 2.º parámetro NO es un callback de error
+            var done = false;
+            function finish() { if (!done) { done = true; callback(); } }
+            try {
+                api.getSession(function (s) {
+                    session.userName = s && s.userName ? s.userName : '';
+                    finish();
+                });
+            } catch (e) {
+                finish();
+            }
         },
         focus: function (freshApi, freshState) {
             api = freshApi;
