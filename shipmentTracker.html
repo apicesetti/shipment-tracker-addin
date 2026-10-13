@@ -31,6 +31,7 @@
             <select id="st-s-status">
                 <option value="open">Abiertos</option>
                 <option value="closed">Finalizados</option>
+                <option value="void">Anulados</option>
                 <option value="all">Todos</option>
             </select>
             <button id="st-s-new" class="st-btn">+ Nuevo shipment</button>
@@ -95,6 +96,11 @@
             <input id="st-h-device" type="search" placeholder="Patente / vehículo" autocomplete="off">
             <label class="st-lbl">Desde <input id="st-h-from" type="date"></label>
             <label class="st-lbl">Hasta <input id="st-h-to" type="date"></label>
+            <select id="st-h-void" title="Registros de shipments anulados">
+                <option value="exclude">Sin anulados</option>
+                <option value="include">Incluir anulados</option>
+                <option value="only">Solo anulados</option>
+            </select>
             <button id="st-h-search" class="st-btn">Buscar</button>
             <button id="st-h-export" class="st-btn st-btn-ghost">Exportar CSV</button>
         </div>

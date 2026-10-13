@@ -119,3 +119,26 @@
 .st-form textarea { font-family: "Roboto Mono", Consolas, monospace; font-size: 13px; resize: vertical; }
 .st-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .st-form-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px; }
+
+/* ---- v3.1: anular y borrar datos ---- */
+.st-badge-void { background: #fdecea; color: var(--st-danger); }
+.st-table tr.is-void td { color: var(--st-muted); }
+.st-table tr.is-void td strong { text-decoration: line-through; }
+.st-btn-danger-solid { background: var(--st-danger); border-color: var(--st-danger); color: #fff; }
+.st-btn-danger-solid:hover:not(:disabled) { background: #8f1c13; }
+.st-btn-void { color: var(--st-danger); border-color: var(--st-line); }
+.st-void-info { background: #fdecea; color: #7a1a12; border-radius: 4px; padding: 8px 10px; margin-bottom: 10px; font-size: 13px; }
+.st-void-form { display: grid; gap: 8px; border-top: 1px solid var(--st-line); margin-top: 8px; padding-top: 10px; }
+.st-void-form label { display: grid; gap: 4px; }
+.st-void-form textarea { width: 100%; font: inherit; padding: 6px 8px; border: 1px solid var(--st-line); border-radius: 4px; resize: vertical; }
+.st-danger-zone { margin-top: 18px; padding: 12px 14px; border: 1px solid #f3c1bb; border-radius: 6px; background: #fffafa; }
+.st-danger-zone h3 { margin: 0 0 4px; font-size: 15px; font-weight: 500; color: var(--st-danger); display: flex; align-items: center; gap: 8px; }
+.st-tag-admin { background: #fdecea; color: var(--st-danger); font-weight: 400; }
+.st-purge-grid { display: grid; gap: 8px; margin: 8px 0; }
+.st-purge-grid label { display: grid; gap: 4px; }
+.st-purge-grid .st-radio, .st-purge-grid .st-check-lbl { display: flex; align-items: center; gap: 8px; }
+.st-purge-grid input[type=text], .st-purge-grid input[type=date], .st-purge-steps input { font: inherit; padding: 5px 8px; border: 1px solid var(--st-line); border-radius: 4px; }
+.st-purge-preview { margin: 6px 0 10px; font-weight: 500; }
+.st-purge-steps { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.st-purge-steps input { width: 150px; }
+.st-btn.is-done { border-color: #1e6b38; color: #1e6b38; }
